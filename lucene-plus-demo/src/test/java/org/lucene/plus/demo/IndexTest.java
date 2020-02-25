@@ -9,6 +9,7 @@ import com.lucene.analysis.standard.StandardAnalyzer;
 import com.lucene.document.Document;
 import com.lucene.document.Field;
 import com.lucene.document.Field.Store;
+import com.lucene.document.IntPoint;
 import com.lucene.document.NumericDocValuesField;
 import com.lucene.document.SortedDocValuesField;
 import com.lucene.document.StringField;
@@ -31,10 +32,10 @@ public class IndexTest {
 		System.out.println("Hello World!");
 	}
 
-	private static String indexPath = "/Users/apple/data/test";
+	public static String indexPath = "D:\\data\\index\\plustest";
 	private static IndexWriter writer;
 	private static Path file;
-
+	 
 	private static void IndexFiles() throws IOException {
 		file = Paths.get(indexPath);
 		Directory dir = FSDirectory.open(file);
@@ -73,6 +74,10 @@ public class IndexTest {
 		Field sortvalue_field = new StringField("sortvalue", sortname, Store.YES);
 		Field namevalue_field = new StringField("groupvalue", groupname, Store.YES);
 		
+
+	    Field age_field  = new IntPoint("age", Integer.parseInt(sortname));
+		
+		
 		doc.add(id_field);
 		doc.add(name_field); 
 		doc.add(sort_field);
@@ -80,6 +85,8 @@ public class IndexTest {
 
 		doc.add(sortvalue_field);
 		doc.add(namevalue_field);
+		
+		doc.add(age_field);
 
 		writer.addDocument(doc);
 	}
