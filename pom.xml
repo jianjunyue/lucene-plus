@@ -8,5 +8,6 @@
   <modules>
     <module>lucene-plus-common</module>
     <module>lucene-plus-demo</module>
+    <module>lucene-plus-custom</module>
   </modules>
 </project>
