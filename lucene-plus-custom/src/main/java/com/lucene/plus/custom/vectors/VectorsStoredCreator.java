@@ -13,7 +13,8 @@ public class VectorsStoredCreator {
 		for (float vector : vectors.getValue()) {
 			VectorsStoredField.floatToBytes(vector, builder);
 		}
-		return new VectorsStoredField(filedName, builder.bytes());
+//		return new VectorsStoredField(filedName, builder.bytes()); 
+		return new VectorsStoredField(filedName, builder.toBytesRef());
 	}
 
 	public static float[] geVectorsFromVectorsStoredField(BytesRef ref) {

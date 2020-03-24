@@ -1,45 +1,49 @@
-package com.lucene.plus.custom.sort.functionquery;
+package com.lucene.plus.custom.vectors.function;
 
-import java.io.IOException;
-import java.time.LocalTime;
+import java.io.IOException; 
 import java.util.Map;
- 
+
+import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
-import com.lucene.index.LeafReaderContext;
-import com.lucene.index.NumericDocValues; 
+import com.lucene.index.LeafReaderContext; 
+import com.lucene.plus.custom.vectors.VectorsStoredCreator;
 import com.lucene.queries.function.FunctionValues;
-import com.lucene.queries.function.ValueSource; 
+import com.lucene.queries.function.ValueSource;
 
 /**
- * https://blog.csdn.net/sc736031305/article/details/84711554
- * 商品有效期是小时级别的时间段，当前时间无效的排序要置底
+ * https://blog.csdn.net/sc736031305/article/details/84711554 向量内积分数排序
  */
-public class TimeValueSouce extends ValueSource {
-	private static long now;
+public class VectorsValueSouce extends ValueSource {
+	private float[] queryVector ; 
 	private String field;
 
-	public TimeValueSouce(String field) {
+	public VectorsValueSouce(String field, float[] queryVertices) {
 		this.field = field;
-		now = LocalTime.now().getHour();
-	}
+		queryVector = queryVertices;
+	} 
 
 	@Override
 	public FunctionValues getValues(Map context, LeafReaderContext readerContext) throws IOException {
-		final NumericDocValues docValues = DocValues.getNumeric(readerContext.reader(), field);
+		final BinaryDocValues docValues = DocValues.getBinary(readerContext.reader(), field);
 		FunctionValues fun = new FunctionValues() {
 
 			@Override
 			public float floatVal(int doc) {
+				float val = 0;
 				try {
 					if (docValues.advanceExact(doc) == false)
-						return 0;
-
-					return docValues.longValue() < 10 ? -docValues.longValue() : docValues.longValue();
+						return val;
+					float[] vertices = VectorsStoredCreator.geVectorsFromVectorsStoredField(docValues.binaryValue());
+					if (queryVector.length == vertices.length) {
+						for (int i = 0; i < queryVector.length; i++) {
+							val += queryVector[i] * vertices[i];
+						}
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return 0;
+				return val;
 			}
 
 			@Override

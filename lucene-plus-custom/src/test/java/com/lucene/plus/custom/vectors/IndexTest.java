@@ -10,6 +10,7 @@ import com.lucene.document.Document;
 import com.lucene.document.Field; 
 import com.lucene.document.StringField;
 import com.lucene.document.Field.Store;
+import com.lucene.document.SortedDocValuesField;
 import com.lucene.index.IndexWriter;
 import com.lucene.index.IndexWriterConfig;
 import com.lucene.index.Term;
@@ -28,7 +29,7 @@ public class IndexTest {
 		System.out.println("Hello World!");
 	}
 
-	private static String indexPath = "D:\\data\\index\\vectest";
+	public static String indexPath = "D:\\data\\index\\vectest";
 	private static IndexWriter writer;
 	private static Path file;
 	
@@ -64,8 +65,9 @@ public class IndexTest {
 		Document doc = new Document(); 
 		Field id_field = new StringField("id", id, Store.YES);
 		Field name_field = new StringField("name", name, Store.YES);// StringField
-		Field vec_field = VectorsStoredCreator.createVectorsFiled("vec",new Vectors(valuevectors) ) ;
-		
+		Field vec_field = VectorsStoredCreator.createVectorsFiled("vectorfiled",new Vectors(valuevectors) ) ;
+//		Field time_BytesRef_field = new SortedDocValuesField("opentime", new BytesRef(open_time));// 分组统计
+
 		doc.add(id_field);
 		doc.add(name_field); 
 		doc.add(vec_field); 

@@ -49,8 +49,6 @@ public class SearchTest {
 			System.out.println(hits.length);
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-//				System.out.println(doc.get("sortname")+" , "+doc.get("groupname"));
-				 
 				System.out.println(doc.get("id") + " , " + doc.get("name")  + " , "
 						+ doc.get("opentime")+" , "+hit.score);
 			}
