@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lucene.util; // from org.apache.solr.util rev 555343
+package com.lucene.util; // from com.solr.util rev 555343
 
 /**  A variety of high efficiency bit twiddling routines.
  * @lucene.internal
