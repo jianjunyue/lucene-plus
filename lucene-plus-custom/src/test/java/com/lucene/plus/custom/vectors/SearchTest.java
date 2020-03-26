@@ -2,7 +2,7 @@ package com.lucene.plus.custom.vectors;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Paths; 
 import java.util.concurrent.Executors;
 
 import com.lucene.document.Document;
@@ -12,7 +12,6 @@ import com.lucene.index.Term;
 import com.lucene.plus.custom.vectors.function.VectorsValueSouce;
 import com.lucene.queries.function.FunctionQuery;
 import com.lucene.queries.function.ValueSource;
-import com.lucene.search.BooleanClause.Occur;
 import com.lucene.search.BooleanQuery;
 import com.lucene.search.IndexSearcher;
 import com.lucene.search.Query;
@@ -21,7 +20,11 @@ import com.lucene.search.Sort;
 import com.lucene.search.SortField;
 import com.lucene.search.TermQuery;
 import com.lucene.search.TopDocs;
+import com.lucene.search.BooleanClause.Occur;
 import com.lucene.store.FSDirectory; 
+
+import com.lucene.util.BytesRef; 
+
 
 public class SearchTest {
 
@@ -32,6 +35,9 @@ public class SearchTest {
 
 	private static String indexPath = IndexTest.indexPath;
 
+	/**
+	 * 向量内积搜索
+	 * */
 	private static void search() {
 		Path file = Paths.get(indexPath);
 		IndexReader reader;
@@ -67,29 +73,5 @@ public class SearchTest {
 	private static IndexSearcher newFixedThreadSearcher(IndexReader r, int nThreads) {
 		return new IndexSearcher(r.getContext(), Executors.newFixedThreadPool(nThreads));
 //        return new IndexSearcher(r.getContext());
-	}
-
-	/**
-	 * 排序。 sort=id,INT,false
-	 */
-	public Sort getSort(String strSort) {
-		try {
-			if (strSort == null || strSort.trim().length() == 0) {
-				return null;
-			}
-			String[] s = strSort.trim().split(",");
-			if (s.length == 2 || s.length == 3) {
-				boolean reverse = false;// 默认是小到大排序
-				if (s.length == 3) {
-					reverse = Boolean.valueOf(s[2].toLowerCase());
-				}
-				SortField.Type type = SortField.Type.INT;
-				Sort sort = new Sort(new SortField(s[0].toLowerCase(), type, reverse));
-				return sort;
-			} else {
-			}
-		} catch (Exception e) {
-		}
-		return null;
 	}
 }
