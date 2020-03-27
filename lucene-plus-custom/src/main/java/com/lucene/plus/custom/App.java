@@ -1,5 +1,6 @@
 package com.lucene.plus.custom;
 
+import com.lucene.document.IntPoint;
 import com.lucene.search.Sort;
 import com.lucene.search.SortField;
 
@@ -11,6 +12,7 @@ public class App
 {
     public static void main( String[] args )
     {
+//    	IntPoint.newRangeQuery(field, lowerValue, upperValue)
         System.out.println( "Hello World!" );
     }
     
