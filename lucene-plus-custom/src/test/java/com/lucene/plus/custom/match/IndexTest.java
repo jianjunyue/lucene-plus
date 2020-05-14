@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.range;
+package com.lucene.plus.custom.match;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,7 +33,7 @@ public class IndexTest {
 		System.out.println("Hello World!");
 	}
 
-	public static String indexPath = "D:\\data\\index\\plusrange";
+	public static String indexPath = "D:\\data\\index\\plusmatch";
 	private static IndexWriter writer;
 	private static Path file;
 

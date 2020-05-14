@@ -1,4 +1,4 @@
-package com.lucene.plus.custom;
+package com.lucene.plus.custom.util;
 
 public enum IndexType {
     Yes, No

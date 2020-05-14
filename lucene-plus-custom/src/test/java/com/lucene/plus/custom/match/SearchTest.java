@@ -1,8 +1,8 @@
-package com.lucene.plus.custom.range;
+package com.lucene.plus.custom.match;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths; 
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 
 import com.lucene.document.Document;
@@ -22,10 +22,9 @@ import com.lucene.search.SortField;
 import com.lucene.search.TermQuery;
 import com.lucene.search.TopDocs;
 import com.lucene.search.BooleanClause.Occur;
-import com.lucene.store.FSDirectory; 
+import com.lucene.store.FSDirectory;
 
-import com.lucene.util.BytesRef; 
-
+import com.lucene.util.BytesRef;
 
 public class SearchTest {
 
@@ -38,17 +37,16 @@ public class SearchTest {
 
 	/**
 	 * Range范围查询搜索
-	 * */
+	 */
 	private static void search() {
 		Path file = Paths.get(indexPath);
 		IndexReader reader;
 		try {
-			reader = DirectoryReader.open(FSDirectory.open(file)); 
+			reader = DirectoryReader.open(FSDirectory.open(file));
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
-			
-			Query query = IntPoint.newRangeQuery("opentime", 1, 9);
+			Query query = IntPoint.newSetQuery("opentime", 13); 
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
-			blquery.add(query, Occur.MUST); 
+			blquery.add(query, Occur.MUST);
 			query = blquery.build();
 
 			TopDocs results = searcher.search(query, 3);
@@ -56,9 +54,9 @@ public class SearchTest {
 			System.out.println(hits.length);
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-			
-				System.out.println("docId:"+hit.doc+" , id:"+doc.get("id") + " , name:" + doc.get("name")  + " , "
-						+ doc.get("opentime")+" , "+hit.score);
+
+				System.out.println("docId:" + hit.doc + " , id:" + doc.get("id") + " , name:" + doc.get("name") + " , "
+						+ doc.get("opentime") + " , " + hit.score);
 			}
 
 		} catch (IOException e) {

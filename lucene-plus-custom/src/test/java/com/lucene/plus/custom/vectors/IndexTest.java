@@ -14,6 +14,7 @@ import com.lucene.document.SortedDocValuesField;
 import com.lucene.index.IndexWriter;
 import com.lucene.index.IndexWriterConfig;
 import com.lucene.index.Term;
+import com.lucene.plus.custom.vectors.Field.VectorsStoredField;
 import com.lucene.store.Directory;
 import com.lucene.store.FSDirectory; 
 
@@ -65,7 +66,9 @@ public class IndexTest {
 		Document doc = new Document(); 
 		Field id_field = new StringField("id", id, Store.YES);
 		Field name_field = new StringField("name", name, Store.YES);// StringField
-		Field vec_field = VectorsStoredCreator.createVectorsFiled("vectorfiled",new Vectors(valuevectors) ) ;
+//		Field vec_field = VectorsStoredCreator.createVectorsFiled("vectorfiled",new Vectors(valuevectors) ) ;
+		Field vec_field = new VectorsStoredField("vectorfiled",new Vectors(valuevectors) ) ;
+
 //		Field time_BytesRef_field = new SortedDocValuesField("opentime", new BytesRef(open_time));// 分组统计
 
 		doc.add(id_field);

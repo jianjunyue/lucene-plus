@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
-import com.lucene.index.LeafReaderContext; 
-import com.lucene.plus.custom.vectors.VectorsStoredCreator;
+import com.lucene.index.LeafReaderContext;
+import com.lucene.plus.custom.util.BinaryBytesUtils; 
 import com.lucene.queries.function.FunctionValues;
 import com.lucene.queries.function.ValueSource;
 
@@ -33,7 +33,7 @@ public class VectorsValueSouce extends ValueSource {
 				try {
 					if (docValues.advanceExact(doc) == false)
 						return val;
-					float[] vertices = VectorsStoredCreator.geVectorsFromVectorsStoredField(docValues.binaryValue());
+					float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
 					if (queryVector.length == vertices.length) {
 						for (int i = 0; i < queryVector.length; i++) {
 							val += queryVector[i] * vertices[i];

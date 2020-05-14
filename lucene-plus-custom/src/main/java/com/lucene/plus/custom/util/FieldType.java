@@ -1,4 +1,4 @@
-package com.lucene.plus.custom;
+package com.lucene.plus.custom.util;
 
 public enum FieldType {
     stringfield("string"), intfield("int"), floatfield("float"), doublefield("double"), longfield("long"), textfield("text"),
