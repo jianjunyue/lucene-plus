@@ -33,11 +33,9 @@ public class DistanceWeight extends ConstantScoreWeight {
 
 	@Override
 	public Scorer scorer(LeafReaderContext context) throws IOException {
-		LeafReader reader = context.reader();
-
+		LeafReader reader = context.reader(); 
 		PointValues values = reader.getPointValues(field);
-		if (values == null) {
-			// No docs in this segment/field indexed any points
+		if (values == null) { 
 			return null;
 		}
 

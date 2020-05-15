@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.lucene.geo.GeoEncodingUtils;
 import com.lucene.geo.GeoUtils;
 import com.lucene.geo.Rectangle;
+import com.lucene.index.Term;
 import com.lucene.search.IndexSearcher;
 import com.lucene.search.Query;
 import com.lucene.search.Weight;
@@ -21,10 +22,10 @@ public class DistanceQuery extends Query {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radiusMeters = radiusMeters;
-	}
+	} 
 
 	public Weight createWeight(IndexSearcher searcher, boolean needsScores) throws IOException {
-		return new DistanceWeight(this,getDistanceInfo(), 0f);
+		return new DistanceWeight(this, getDistanceInfo(), 0f);
 	}
 
 	@Override
@@ -65,9 +66,8 @@ public class DistanceQuery extends Query {
 		}
 		final double sortKey = GeoUtils.distanceQuerySortKey(this.radiusMeters);
 		final double axisLat = Rectangle.axisLat(this.latitude, this.radiusMeters);
-		return new DistanceInfo(field, latitude, longitude, radiusMeters, sortKey, axisLat, minLat, maxLat, minLon, maxLon,minLon2);
+		return new DistanceInfo(field, latitude, longitude, radiusMeters, sortKey, axisLat, minLat, maxLat, minLon,
+				maxLon, minLon2);
 	}
-
- 
 
 }
