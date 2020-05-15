@@ -351,4 +351,13 @@ public abstract class StringHelper {
 
     return new BytesRef(bytes);
   }
+  
+  public static int compare(int count, byte[] a, int aOffset, byte[] b, int bOffset) {
+	    for (int i = 0; i < count; i++) {
+	      int cmp = (a[aOffset + i] & 0xFF) - (b[bOffset + i] & 0xFF);
+	      if (cmp != 0)
+	        return cmp; 
+	    } 
+	    return 0;
+	  }
 }

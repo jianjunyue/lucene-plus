@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.match;
+package com.lucene.plus.custom.filter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,7 +36,7 @@ public class IndexTest {
 		System.out.println("Hello World!");
 	}
 
-	public static String indexPath = "D:\\data\\index\\plusmatch3";
+	public static String indexPath = "D:\\data\\index\\plusfilter";
 	private static IndexWriter writer;
 	private static Path file;
 

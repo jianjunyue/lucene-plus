@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.match;
+package com.lucene.plus.custom.filter;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -47,8 +47,11 @@ public class SearchTest {
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
 			Query query0 = IntPoint.newSetQuery("opentime", 5); 
 			Query query1 = IntPoint.newSetQuery("opentime", 6); 
-			Query query2 = IntPoint.newSetQuery("opentime", 13); 
-//			Query query = FloatPoint.newSetQuery("opentime", 2); 
+			
+
+//Filter numericRangeFilter = NumericRangeFilter.newIntRange("size", 500, 900, true, true);
+
+			Query query2 = IntPoint.newSetQuery("opentime", 13);  
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
 			blquery.add(query0, Occur.SHOULD);
 			blquery.add(query1, Occur.SHOULD);
