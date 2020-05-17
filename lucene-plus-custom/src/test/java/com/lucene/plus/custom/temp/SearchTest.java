@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.query;
+package com.lucene.plus.custom.temp;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,10 +38,10 @@ public class SearchTest {
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50); 
 
 			String field = "latlon";
-			double longitude = 130.11;
-			double latitude = 30.11;
-			double radiusMeters = 10000;
-			Query query = new DistanceQuery(field, latitude, longitude, radiusMeters);
+			double longitude = 112.321; 
+			double latitude = 31.67;
+			double radiusMeters = 100;
+			Query query = new LatLonPointDistanceQuery(field, latitude, longitude, radiusMeters);
 
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
 

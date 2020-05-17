@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.query;
+package com.lucene.plus.custom.temp.intpoint;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 
 import com.lucene.document.Document;
+import com.lucene.document.FloatPoint;
 import com.lucene.document.IntPoint;
 import com.lucene.index.DirectoryReader;
 import com.lucene.index.IndexReader;
 import com.lucene.index.Term;
+import com.lucene.plus.custom.vectors.function.VectorsValueSouce;
 import com.lucene.queries.function.FunctionQuery;
-import com.lucene.search.BooleanClause.Occur;
+import com.lucene.queries.function.ValueSource;
 import com.lucene.search.BooleanQuery;
 import com.lucene.search.IndexSearcher;
 import com.lucene.search.Query;
@@ -20,7 +22,10 @@ import com.lucene.search.Sort;
 import com.lucene.search.SortField;
 import com.lucene.search.TermQuery;
 import com.lucene.search.TopDocs;
-import com.lucene.store.FSDirectory; 
+import com.lucene.search.BooleanClause.Occur;
+import com.lucene.store.FSDirectory;
+
+import com.lucene.util.BytesRef;
 
 public class SearchTest {
 
@@ -30,31 +35,30 @@ public class SearchTest {
 	}
 
 	private static String indexPath = IndexTest.indexPath;
+
+	/**
+	 * Range范围查询搜索
+	 */
 	private static void search() {
 		Path file = Paths.get(indexPath);
 		IndexReader reader;
 		try {
 			reader = DirectoryReader.open(FSDirectory.open(file));
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50); 
-
-			String field = "latlon";
-			double longitude = 130.11;
-			double latitude = 30.11;
-			double radiusMeters = 10000;
-			Query query = new DistanceQuery(field, latitude, longitude, radiusMeters);
-
+//			Query query =new IntPointQuery("opentime", 4,6); 
+			Query query =new IntPointQuery("opentime", 6); 
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
+			blquery.add(query , Occur.MUST); 
+		    query = blquery.build();
 
-			blquery.add(query, Occur.SHOULD);
-			query = blquery.build();
-
-			TopDocs results = searcher.search(query, 5000);
+			TopDocs results = searcher.search(query, 10);
 			ScoreDoc[] hits = results.scoreDocs;
 			System.out.println(hits.length);
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-				System.out.println(
-						doc.get("id") + " , " + doc.get("name") + " , " + doc.get("opentime") + " , " + hit.score);
+
+				System.out.println("docId:" + hit.doc + " , id:" + doc.get("id") + " , name:" + doc.get("name") + " , "
+						+ doc.get("opentime") + " , " + hit.score);
 			}
 
 		} catch (IOException e) {
