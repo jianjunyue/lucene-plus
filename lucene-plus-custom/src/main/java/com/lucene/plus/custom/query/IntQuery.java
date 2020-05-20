@@ -1,4 +1,4 @@
-package org.lucene.plus.demo.termquery;
+package com.lucene.plus.custom.query;
 
 import java.io.IOException;  
  
@@ -17,6 +17,10 @@ import com.lucene.util.DocIdSetBuilder;
 import com.lucene.util.FutureArrays;
 import com.lucene.util.NumericUtils;
 
+/**
+ * 进行int值精确比较重写Query
+ * 对应的Field为IntPoint，但也可以是多个数值二进制byte[]
+ * */
 public class IntQuery extends Query {
 	private String field;
 	private byte[] queryPackedValue = new byte[4];
