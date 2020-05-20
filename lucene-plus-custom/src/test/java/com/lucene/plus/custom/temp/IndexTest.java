@@ -1,4 +1,4 @@
-package com.lucene.plus.custom.query;
+package com.lucene.plus.custom.temp;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -50,8 +50,8 @@ public class IndexTest {
 	 
 	private static void IndexFiles() throws IOException { 
 
-		indexDoc("1", "上海", "2", "130");
-		indexDoc("2", "上海", "1", "112"); 
+		indexDoc("1", "上海", "32.21", "130.11");
+		indexDoc("2", "上海", "31.67", "112.32"); 
 		  
 		writer.commit();
 		writer.forceMerge(5);
@@ -64,7 +64,7 @@ public class IndexTest {
 		Field name_field = new StringField("name", name, Store.YES);
 //		Field latlon_field = new StringField("latlon", info, Store.YES);// StringField 
 
-		Field latlon_field = new IntPoint("latlon", Integer.parseInt(info));
+		Field latlon_field = new LatLonPointField("latlon",Float.parseFloat(open_time),Float.parseFloat(info));
 		
 		doc.add(id_field);
 		doc.add(name_field); 
