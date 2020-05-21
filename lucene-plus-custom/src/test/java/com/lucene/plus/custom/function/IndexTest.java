@@ -70,7 +70,7 @@ public class IndexTest {
 		Field time_BytesRef_field = new NumericDocValuesField("opentime", Long.parseLong(open_time));
 //		Field time_BytesRef_field = new SortedDocValuesField("opentime", new BytesRef(open_time));// 分组统计
 
-		Field info_field = new StringField("opentime", open_time, Store.YES); 
+		Field info_field = new StringField("stropentime", open_time, Store.YES); 
 		
 		
 		doc.add(id_field);

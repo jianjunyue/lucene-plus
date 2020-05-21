@@ -38,7 +38,8 @@ public class SearchTest {
 		try {
 			reader = DirectoryReader.open(FSDirectory.open(file)); 
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
-			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new TimeValueSouce("opentime"),5,10,true,true);
+			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("opentime"),5,10,true,true);
+//			FunctionQuery functionQuery = new FunctionQuery(new FunValueSouce("opentime"));
 			
 //			Query query = new TermQuery(new Term("name", "北京"));
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
@@ -47,12 +48,11 @@ public class SearchTest {
 			Query	query = blquery.build();
 
 			TopDocs results = searcher.search(query, 5000);
-			ScoreDoc[] hits = results.scoreDocs;
-			System.out.println(hits.length);
+			ScoreDoc[] hits = results.scoreDocs; 
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
 				System.out.println(doc.get("id") + " , " + doc.get("name")  + " , "
-						+ doc.get("opentime")+" , "+hit.score);
+						+ doc.get("opentime")+" , "+ doc.get("stropentime")+" , "+hit.score);
 			}
 
 		} catch (IOException e) {
