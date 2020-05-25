@@ -48,14 +48,13 @@ public class SearchTest {
 			Query query0 = IntPoint.newSetQuery("opentime", 5); 
 			Query query1 = IntPoint.newSetQuery("opentime", 6); 
 			
-
 //Filter numericRangeFilter = NumericRangeFilter.newIntRange("size", 500, 900, true, true);
 
 			Query query2 = IntPoint.newSetQuery("opentime", 13);  
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
-			blquery.add(query0, Occur.SHOULD);
-			blquery.add(query1, Occur.SHOULD);
-			blquery.add(query2, Occur.SHOULD);
+			blquery.add(query0, Occur.FILTER);
+//			blquery.add(query1, Occur.FILTER);
+//			blquery.add(query2, Occur.FILTER);
 			Query query = blquery.build();
 
 			TopDocs results = searcher.search(query, 10);

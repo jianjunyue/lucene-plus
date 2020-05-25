@@ -54,10 +54,10 @@ public class IndexTest {
 	private static void IndexFiles() throws IOException {
 
 		indexDoc("1", "上海", "1", "shanghai1");
-		indexDoc("2", "上海", "5", "shanghai2");
-		indexDoc("3", "上海", "13", "shanghai3");
-		indexDoc("4", "上海", "14", "shanghai4");
-		indexDoc("5", "北京", "24", "beijing1");
+		indexDoc("2", "上海", "1", "shanghai2");
+		indexDoc("3", "上海", "1", "shanghai3");
+		indexDoc("4", "上海", "4", "shanghai4");
+		indexDoc("5", "北京", "5", "beijing1");
 		indexDoc("6", "北京", "6", "beijing2");
 		indexDoc("7", "北京", "7", "beijing3");
 
