@@ -17,7 +17,8 @@ public class VectorsValueSouce extends ValueSource {
 	private float[] queryVector ; 
 	private String field;
 
-	public VectorsValueSouce(String field, float[] queryVertices) {
+	public VectorsValueSouce(String field, float[] queryVertices) 
+	{
 		this.field = field;
 		queryVector = queryVertices;
 	} 
