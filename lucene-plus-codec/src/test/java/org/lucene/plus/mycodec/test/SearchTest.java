@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 
+import org.lucene.plus.codec.utils.BinaryBytesUtils;
+
 import com.lucene.analysis.Analyzer;
 import com.lucene.analysis.standard.StandardAnalyzer;
 import com.lucene.document.Document;
@@ -68,9 +70,10 @@ public class SearchTest {
 			ScoreDoc[] hits = results.scoreDocs; 
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-//				System.out.println(doc.get("sortname")+" , "+doc.get("groupname"));
-				
-				System.out.println(hit.doc+" , "+doc.get("id")+" , "+doc.get("name") +" , "+doc.get("sortvalue")+" , "+doc.get("groupvalue"));
+				Object obj= doc.get("test_vector");
+				float[] floatVectors = BinaryBytesUtils.bytesToFloats((byte[])obj);
+				System.out.println(floatVectors[0]);
+				System.out.println(hit.doc+" , "+doc.get("id")+" , "+doc.get("test_vector")+" , "+doc.get("name") +" , "+doc.get("sortvalue")+" , "+doc.get("groupvalue"));
 			}
 
 		} catch (IOException e) {

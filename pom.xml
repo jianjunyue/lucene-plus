@@ -10,6 +10,7 @@
 		<module>lucene-plus-demo</module>
 		<module>lucene-plus-custom</module>
     <module>lucene-plus-codec</module>
+    <module>lucene-plus-knn</module>
   </modules>
 	<build>
 		<plugins>

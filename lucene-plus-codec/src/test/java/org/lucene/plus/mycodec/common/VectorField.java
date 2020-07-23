@@ -2,10 +2,16 @@ package org.lucene.plus.mycodec.common;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
+import org.lucene.plus.codec.utils.BinaryBytesUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
 import com.lucene.document.Field;
 import com.lucene.document.FieldType;
 import com.lucene.index.DocValuesType;
+import com.lucene.index.IndexOptions;
 import com.lucene.util.BytesRef;
 
 public class VectorField extends Field {
@@ -14,10 +20,10 @@ public class VectorField extends Field {
 	public static final FieldType TYPE = new FieldType();
 
 	static {
-		TYPE.setStored(true);
-		TYPE.setDocValuesType(DocValuesType.SORTED);
-
-//		TYPE.setDocValuesType(DocValuesType.BINARY);
+		TYPE.setStored(true);  
+		TYPE.setIndexOptions(IndexOptions.DOCS);
+		TYPE.setDocValuesType(DocValuesType.BINARY);
+		TYPE.setTokenized(false);
 		TYPE.putAttribute(KNN_FIELD, "true"); // This attribute helps to determine knn field type
 
 		TYPE.freeze();
@@ -49,6 +55,6 @@ public class VectorField extends Field {
 			throw new RuntimeException(e);
 		}
 		return bytes;
-	}
+	} 
 
 }

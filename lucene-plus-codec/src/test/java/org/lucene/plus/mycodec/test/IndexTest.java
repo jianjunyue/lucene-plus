@@ -45,7 +45,7 @@ public class IndexTest {
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexWriterConfig iwc = new IndexWriterConfig(analyzer); 
 		iwc.setOpenMode(OpenMode.CREATE);
-		iwc.setCodec(new MyCodec());
+//		iwc.setCodec(new MyCodec());
 		writer = new IndexWriter(dir, iwc);
   
 		indexDoc("1", "上海", "1111", "shanghai1");
