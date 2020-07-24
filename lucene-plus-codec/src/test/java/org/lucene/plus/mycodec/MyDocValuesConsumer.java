@@ -52,23 +52,7 @@ public class MyDocValuesConsumer extends DocValuesConsumer {
 		values.binaryValue();
 	}
 	
-	
-    public static KNNCodecUtil.Pair getFloats(BinaryDocValues values) throws IOException {
-        ArrayList<float[]> vectorList = new ArrayList<>();
-        ArrayList<Integer> docIdList = new ArrayList<>();
-        for (int doc = values.nextDoc(); doc != DocIdSetIterator.NO_MORE_DOCS; doc = values.nextDoc()) {
-            BytesRef bytesref = values.binaryValue();
-            try (ByteArrayInputStream byteStream = new ByteArrayInputStream(bytesref.bytes, bytesref.offset, bytesref.length);
-                ObjectInputStream objectStream = new ObjectInputStream(byteStream)) {
-                float[] vector = (float[]) objectStream.readObject();
-                vectorList.add(vector);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            docIdList.add(doc);
-        }
-        return new KNNCodecUtil.Pair(docIdList.stream().mapToInt(Integer::intValue).toArray(), vectorList.toArray(new float[][]{}));
-    }
+	 
 
 	@Override
 	public void addSortedField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
