@@ -19,13 +19,36 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexableFieldType;
 import org.apache.lucene.util.BytesRef;
 
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.DocValuesType;
+
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 
 public class VectorField extends Field {
+	
+	public static final FieldType TYPE = new FieldType();
+    public static final String KNN_FIELD = "knn_field1";
+
+	static {
+		TYPE.setStored(true);
+		TYPE.setDocValuesType(DocValuesType.SORTED);
+		TYPE.putAttribute(KNN_FIELD, "true"); //This attribute helps to determine knn field type
+		TYPE.freeze();
+	}
 
     public VectorField(String name, float[] value, IndexableFieldType type) {
         super(name, new BytesRef(), type);
+        try {
+            this.setBytesValue(floatToByte(value));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+
+    public VectorField(String name, float[] value) {
+        super(name, new BytesRef(), TYPE);
         try {
             this.setBytesValue(floatToByte(value));
         } catch (Exception e) {

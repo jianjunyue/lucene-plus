@@ -14,20 +14,24 @@ public class MyDocValuesFormat extends DocValuesFormat {
 
 	protected MyDocValuesFormat(String name) {
 		super(name);
+		System.out.println("MyDocValuesFormat name ");
 		// TODO Auto-generated constructor stub
 	}
 
 	protected MyDocValuesFormat() {
 		super("MyCodec");
+		System.out.println("MyDocValuesFormat ");
 	}
 
 	@Override
 	public DocValuesConsumer fieldsConsumer(SegmentWriteState state) throws IOException {
+		System.out.println("fieldsConsumer ");
 		return new MyDocValuesConsumer(state, MY_EXT);
 	}
 
 	@Override
 	public DocValuesProducer fieldsProducer(SegmentReadState state) throws IOException {
+		System.out.println("fieldsProducer ");
 		return new MyDocValuesProducer(state, MY_EXT);
 	}
 

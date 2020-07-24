@@ -97,17 +97,18 @@ class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
 
             // Pass the path for the nms library to save the file
             String tempIndexPath = indexPath + TEMP_SUFFIX;
+            System.out.println("tempIndexPath:"+tempIndexPath);
             Map<String, String> fieldAttributes = field.attributes();
             String spaceType = fieldAttributes.getOrDefault(KNNConstants.SPACE_TYPE, SpaceTypes.l2.getValue());
             String[] algoParams = getKNNIndexParams(fieldAttributes);
-            AccessController.doPrivileged(
-                    new PrivilegedAction<Void>() {
-                        public Void run() {
-                            KNNIndex.saveIndex(pair.docs, pair.vectors, tempIndexPath, algoParams, spaceType);
-                            return null;
-                        }
-                    }
-            );
+//            AccessController.doPrivileged(
+//                    new PrivilegedAction<Void>() {
+//                        public Void run() {
+//                            KNNIndex.saveIndex(pair.docs, pair.vectors, tempIndexPath, algoParams, spaceType);
+//                            return null;
+//                        }
+//                    }
+//            );
 
             String hsnwTempFileName = hnswFileName + TEMP_SUFFIX;
 

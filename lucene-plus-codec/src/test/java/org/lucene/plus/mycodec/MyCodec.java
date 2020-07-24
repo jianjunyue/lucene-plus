@@ -8,8 +8,9 @@ public class MyCodec extends FilterCodec {
 
 	private final MyDocValuesFormat myDocValuesFormat = new MyDocValuesFormat();
 
-	public MyCodec() {
+	public MyCodec() {  
 		super("MyCodec", new Lucene84Codec());
+ 		System.out.println("MyCodec ");
 		// TODO Auto-generated constructor stub
 	}
 

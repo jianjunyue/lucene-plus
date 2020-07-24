@@ -45,17 +45,17 @@ public class IndexTest {
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexWriterConfig iwc = new IndexWriterConfig(analyzer); 
 		iwc.setOpenMode(OpenMode.CREATE);
-//		iwc.setCodec(new MyCodec());
+		iwc.setCodec(new MyCodec());
 		writer = new IndexWriter(dir, iwc);
   
 		indexDoc("1", "上海", "1111", "shanghai1");
-		indexDoc("2", "上海", "12", "shanghai2");
-		indexDoc("3", "上海", "313", "shanghai3");
-		indexDoc("4", "上海", "114", "shanghai4");
-		indexDoc("5", "北京", "225", "beijing1");
-		indexDoc("6", "北京", "226", "beijing2");
-		indexDoc("7", "北京", "227", "beijing3");
-		indexDoc("8", "北京", "228", "beijing4");
+//		indexDoc("2", "上海", "12", "shanghai2");
+//		indexDoc("3", "上海", "313", "shanghai3");
+//		indexDoc("4", "上海", "114", "shanghai4");
+//		indexDoc("5", "北京", "225", "beijing1");
+//		indexDoc("6", "北京", "226", "beijing2");
+//		indexDoc("7", "北京", "227", "beijing3");
+//		indexDoc("8", "北京", "228", "beijing4");
 		 
 		
 //		updateDocument();
@@ -74,13 +74,11 @@ public class IndexTest {
 		Field sortvalue_field = new StringField("sortvalue", sortname, Store.YES);
 		Field namevalue_field = new StringField("groupvalue", groupname, Store.YES);
 		
-
 	    Field age_field  = new IntPoint("age", Integer.parseInt(sortname));
 		
 	    float[] array = {1.0f, 3.0f, 4.0f};
         VectorField vectorField = new VectorField("test_vector", array );
 	    
-
 		doc.add(vectorField);
 	    
 		doc.add(id_field);
