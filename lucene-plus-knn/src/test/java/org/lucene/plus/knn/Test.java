@@ -83,14 +83,14 @@ public class Test extends LuceneTestCase {
 		Field name_field = new StringField("name", "asdasd", Store.YES);// StringField
 		Field sort_field = new NumericDocValuesField("ndocvalue", Long.parseLong("5"));
 		
-		Field binary_field =new BinaryDocValuesField("ndocvalue", new BytesRef("111"));
+		Field binary_field =new BinaryDocValuesField("bndocvalue", new BytesRef("111"));
 		
 		IndexWriter writer = new IndexWriter(dir, iwc);
 		Document doc = new Document();
-//		doc.add(vectorField);
-//		doc.add(age_field);
-//		doc.add(sort_field);
-//		doc.add(name_field);
+		doc.add(vectorField);
+		doc.add(age_field);
+		doc.add(sort_field);
+		doc.add(name_field);
 		doc.add(binary_field);
 		writer.addDocument(doc);
 		writer.commit();

@@ -11,6 +11,7 @@
 		<module>lucene-plus-custom</module>
     <module>lucene-plus-codec</module>
     <module>lucene-plus-knn</module>
+    <module>lucene-plus-test</module>
   </modules>
 	<build>
 		<plugins>
