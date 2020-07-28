@@ -66,13 +66,13 @@ class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
 
     @Override
     public void addBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
-        delegatee.addBinaryField(field, valuesProducer);
+//        delegatee.addBinaryField(field, valuesProducer); //执行 Lucene80DocValuesConsumer的addBinaryField方法
         addKNNBinaryField(field, valuesProducer);
     }
 
     public void addKNNBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
         KNNCounter.GRAPH_INDEX_REQUESTS.increment();
-        if (field.attributes().containsKey(KNNVectorFieldMapper.KNN_FIELD)) {
+        if (field.attributes().containsKey(KNNVectorFieldMapper.KNN_FIELD+"?")) {
 
             /**
              * We always write with latest NMS library version

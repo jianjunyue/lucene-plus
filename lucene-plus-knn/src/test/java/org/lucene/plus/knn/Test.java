@@ -27,6 +27,8 @@ import org.apache.lucene.store.ChecksumIndexInput;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.mockito.Mockito;
+import org.apache.lucene.document.BinaryDocValuesField;
+import org.apache.lucene.document.NumericDocValuesField;
 
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.Field.Store;
@@ -45,6 +47,8 @@ import java.util.stream.Collectors;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.LuceneTestCase;
 
 public class Test extends LuceneTestCase {
@@ -62,6 +66,7 @@ public class Test extends LuceneTestCase {
 	}
 
 	public static void testIndex() throws Exception {
+		testdelete();
 //		Codec codec = new KNN80Codec();
 		Codec codec = new MyKNNCodec();
 		Directory dir = FSDirectory.open(file);
@@ -71,23 +76,29 @@ public class Test extends LuceneTestCase {
 		iwc.setCodec(codec);
 
 		float[] array = { 1.0f, 2.0f, 3.0f };
-//		VectorField vectorField = new VectorField("test_vector", array, KNNVectorFieldMapper.Defaults.FIELD_TYPE);
+		VectorField vectorField = new VectorField("test_vector", array, KNNVectorFieldMapper.Defaults.FIELD_TYPE);
 //		VectorField vectorField = new VectorField("test_vector", array);
 		
 		Field age_field  = new IntPoint("age", Integer.parseInt("111"));
 		Field name_field = new StringField("name", "asdasd", Store.YES);// StringField
+		Field sort_field = new NumericDocValuesField("ndocvalue", Long.parseLong("5"));
 		
+		Field binary_field =new BinaryDocValuesField("ndocvalue", new BytesRef("111"));
 		
 		IndexWriter writer = new IndexWriter(dir, iwc);
 		Document doc = new Document();
 //		doc.add(vectorField);
-		doc.add(age_field);
-		doc.add(name_field);
+//		doc.add(age_field);
+//		doc.add(sort_field);
+//		doc.add(name_field);
+		doc.add(binary_field);
 		writer.addDocument(doc);
 		writer.commit();
 		writer.close();
 		dir.close();
 	}
+
+	 
 
 	public static void testSearch(Codec codec) throws Exception {
 		Directory dir = FSDirectory.open(file);
@@ -114,4 +125,22 @@ public class Test extends LuceneTestCase {
 		reader.close();
 		dir.close();
 	}
+	
+	public static void testdelete() throws Exception {
+//		Codec codec = new KNN80Codec();
+		Codec codec = new MyKNNCodec();
+		Directory dir = FSDirectory.open(file);
+		Analyzer analyzer = new StandardAnalyzer();
+		IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+		iwc.setMergeScheduler(new SerialMergeScheduler());
+		iwc.setCodec(codec);
+  
+		IndexWriter writer = new IndexWriter(dir, iwc); 
+		writer.deleteAll();
+		writer.commit();
+		writer.close();
+		dir.close();
+	}
+
+	
 }

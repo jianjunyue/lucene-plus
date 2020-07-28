@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.util.BytesRef;
-import org.lucene.plus.knn.index.codec.KNNCodecUtil;
+import com.lucene.search.DocIdSetIterator;
+import com.lucene.util.BytesRef;
+//import org.lucene.plus.knn.index.codec.KNNCodecUtil;
 
 import com.lucene.index.BinaryDocValues;
 
