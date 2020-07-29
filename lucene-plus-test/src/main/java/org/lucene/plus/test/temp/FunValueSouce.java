@@ -40,14 +40,16 @@ public class FunValueSouce extends ValueSource {
 			 * */
 			@Override
 			public float floatVal(int doc) {
+				float f=0f;
 				try {
 					if (docValues.advanceExact(doc) == false)
 						return 0;
-					
+//					f=docValues.longValue();
 					BytesRef ref=docValues.binaryValue();
 					float[] floatVectors =BinaryBytesUtils.bytesToFloats(ref);
-					 System.out.println( floatVectors[0]);
-					return floatVectors[0];
+					f=floatVectors[0];
+					System.out.println( f);
+					return f;
 
 //					return docValues.longValue() < 10 ? -docValues.longValue() : docValues.longValue();
 				} catch (IOException e) {
@@ -59,16 +61,17 @@ public class FunValueSouce extends ValueSource {
 
 			@Override
 			public int intVal(int doc) {
+				float f=0f;
 				try {
-					
+//					f=docValues.longValue();
 					System.out.println("intVal");
 					if (docValues.advanceExact(doc) == false)
 						return 0;
 					 
 					BytesRef ref=docValues.binaryValue();
 					float[] floatVectors =BinaryBytesUtils.bytesToFloats(ref);
-					
-					return floatVectors[0] < 10 ? 10 : 20;
+					f=floatVectors[0];
+					return f  < 10 ? 10 : 20;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.codecs.Codec;
+import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
@@ -14,12 +16,15 @@ import org.apache.lucene.document.SortedDocValuesField;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.SerialMergeScheduler;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
+import org.lucene.plus.test.core.MyKNNCodec;
 import org.lucene.plus.test.core.VectorField;
+import org.lucene.plus.test.temp.BinaryBytesUtils;
 
 public class IndexTest {
 
@@ -43,6 +48,9 @@ public class IndexTest {
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexWriterConfig iwc = new IndexWriterConfig(analyzer); 
 		iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
+		iwc.setMergeScheduler(new SerialMergeScheduler());
+		Codec codec = new MyKNNCodec();
+		iwc.setCodec(codec);
 		writer = new IndexWriter(dir, iwc);
 		writer.deleteAll();
 		writer.commit();
@@ -73,12 +81,15 @@ public class IndexTest {
 		VectorField vectorField = new VectorField("test_vector",array);
 		
 		Field info_field = new StringField("stropentime", open_time, Store.YES); 
-		
+		float[] value = { 1111.0f, 1112.0f, 22223.0f };
+		BytesRef ref = BinaryBytesUtils.floatToBytes(value);
+		BinaryDocValuesField bdvf=new BinaryDocValuesField("bdvf",ref);
 		doc.add(id_field);
 		doc.add(name_field); 
 		doc.add(time_BytesRef_field);
 		doc.add(info_field); 
-		doc.add(vectorField); 
+		doc.add(vectorField);
+		doc.add(bdvf); 
 
 		writer.addDocument(doc);
 	}

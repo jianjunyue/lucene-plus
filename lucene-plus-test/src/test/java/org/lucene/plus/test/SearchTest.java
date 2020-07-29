@@ -35,13 +35,13 @@ public class SearchTest {
 		IndexReader reader;
 		try {
 			reader = DirectoryReader.open(FSDirectory.open(file)); 
-			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
-			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("test_vector"),1,10,true,true);
-//			FunctionQuery functionQuery = new FunctionQuery(new FunValueSouce("opentime"));
-			
+			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);//bdvf  opentime
+			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("bdvf"),1,10,true,true);
+//			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("opentime"),1,10,true,true);
+	 		
 			Query query1 = new TermQuery(new Term("name", "北京"));
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
-			blquery.add(query1, Occur.MUST);
+//			blquery.add(query1, Occur.MUST);
 			blquery.add(functionQuery, Occur.MUST);
 			Query	query = blquery.build();
 

@@ -29,7 +29,7 @@ import java.io.ObjectOutputStream;
 public class VectorField extends Field {
 
 	public static final FieldType TYPE = new FieldType();
-	public static final String KNN_FIELD = "knn_field1";
+	public static final String KNN_FIELD = "knn_field";
 
 	static {
 //		TYPE.setStored(true);
@@ -40,8 +40,9 @@ public class VectorField extends Field {
 		TYPE.setTokenized(false);
 		TYPE.setIndexOptions(IndexOptions.NONE);
 		TYPE.setDocValuesType(DocValuesType.BINARY);
+//		TYPE.setDocValuesType(DocValuesType.SORTED);
 		TYPE.putAttribute(KNN_FIELD, "true"); // This attribute helps to determine knn field type
-
+		TYPE.freeze();
 	}
   
 	public VectorField(String name, float[] value) {

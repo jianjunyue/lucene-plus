@@ -186,7 +186,7 @@ public class KNNIndexCache implements Closeable {
         return statValues;
     }
 
-    protected Set<String> getGraphNamesForIndex(String indexName) {
+    public Set<String> getGraphNamesForIndex(String indexName) {
         return cache.asMap().values().stream()
                 .filter(knnIndexCacheEntry -> indexName.equals(knnIndexCacheEntry.getEsIndexName()))
                 .map(KNNIndexCacheEntry::getIndexPathUrl)

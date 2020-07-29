@@ -52,7 +52,7 @@ public class KNNVectorFieldMapper extends FieldMapper {
     public static final String CONTENT_TYPE = "knn_vector";
     public static final String KNN_FIELD = "knn_field";
 
-    static final int MAX_DIMENSION = 10000;
+    public static final int MAX_DIMENSION = 10000;
 
     protected Explicit<Boolean> ignoreMalformed;
 

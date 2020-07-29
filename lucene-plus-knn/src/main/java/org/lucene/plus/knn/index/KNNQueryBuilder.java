@@ -191,7 +191,7 @@ public class KNNQueryBuilder extends AbstractQueryBuilder<KNNQueryBuilder> {
     }
 
     @Override
-    protected Query doToQuery(QueryShardContext context) throws IOException {
+    public Query doToQuery(QueryShardContext context) throws IOException {
         return new KNNQuery(this.fieldName, vector, k, context.index().getName());
     }
 
