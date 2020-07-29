@@ -38,11 +38,13 @@ public class SearchTest {
 			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);//bdvf  opentime
 			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("bdvf"),1,10,true,true);
 //			FunctionRangeQuery functionQuery = new FunctionRangeQuery(new FunValueSouce("opentime"),1,10,true,true);
-	 		
+
 			Query query1 = new TermQuery(new Term("name", "北京"));
+			Query query2 = new TermQuery(new Term("id", "6"));
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
-//			blquery.add(query1, Occur.MUST);
-			blquery.add(functionQuery, Occur.MUST);
+			blquery.add(query1, Occur.MUST);
+			blquery.add(query2, Occur.MUST);
+//			blquery.add(functionQuery, Occur.MUST);
 			Query	query = blquery.build();
 
 			TopDocs results = searcher.search(query, 5000);
