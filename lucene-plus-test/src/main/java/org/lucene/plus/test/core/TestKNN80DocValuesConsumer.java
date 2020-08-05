@@ -1,18 +1,4 @@
-/*
- *   Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- *   Licensed under the Apache License, Version 2.0 (the "License").
- *   You may not use this file except in compliance with the License.
- *   A copy of the License is located at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   or in the "license" file accompanying this file. This file is distributed
- *   on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- *   express or implied. See the License for the specific language governing
- *   permissions and limitations under the License.
- */
-
+ 
 package org.lucene.plus.test.core;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,23 +9,25 @@ import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.MergeState;
 import org.apache.lucene.index.SegmentWriteState;
+import org.lucene.plus.test.cache.DocVectorCache;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 /**
+ * Lucene80DocValuesConsumer
  * 重写 org.apache.lucene.codecs.lucene80.Lucene80DocValuesConsumer
  * This class writes the KNN docvalues to the segments
  */
-class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
+class TestKNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
 
-	private final Logger logger = LogManager.getLogger(KNN80DocValuesConsumer.class);
+	private final Logger logger = LogManager.getLogger(TestKNN80DocValuesConsumer.class);
 
 	private final String TEMP_SUFFIX = "tmp";
 	private DocValuesConsumer delegatee;
 	private SegmentWriteState state;
 
-	KNN80DocValuesConsumer(DocValuesConsumer delegatee, SegmentWriteState state) throws IOException {
+	TestKNN80DocValuesConsumer(DocValuesConsumer delegatee, SegmentWriteState state) throws IOException {
 		this.delegatee = delegatee;
 		this.state = state;
 	}
@@ -55,7 +43,7 @@ class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
 	}
 
 	public void addKNNBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
-
+		delegatee.addBinaryField(field, valuesProducer);
 		System.out.println("addKNNBinaryField：" + field.name);
 	}
 
@@ -67,15 +55,16 @@ class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
 	@Override
 	public void merge(MergeState mergeState) {
 		try {
+			System.out.println("mergeState："  );
 			delegatee.merge(mergeState);
-			assert mergeState != null;
-			assert mergeState.mergeFieldInfos != null;
-			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
-				DocValuesType type = fieldInfo.getDocValuesType();
-				if (type == DocValuesType.BINARY) {
-					addKNNBinaryField(fieldInfo, new KNN80DocValuesReader(mergeState));
-				}
-			}
+//			assert mergeState != null;
+//			assert mergeState.mergeFieldInfos != null;
+//			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
+//				DocValuesType type = fieldInfo.getDocValuesType();
+//				if (type == DocValuesType.BINARY) {
+//					addKNNBinaryField(fieldInfo, new KNN80DocValuesReader(mergeState));
+//				}
+//			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

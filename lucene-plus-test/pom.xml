@@ -44,6 +44,18 @@
 			<artifactId>guava</artifactId>
 			<version>29.0-jre</version>
 		</dependency>
+		<!--jetCache-->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-lettuce</artifactId>
+			<version>2.6.0</version>
+        </dependency>
+		<!--堆外缓存（ohc）-->
+        <dependency>
+                <groupId>org.caffinitas.ohc</groupId>
+                <artifactId>ohc-core</artifactId>
+                <version>0.7.0</version>
+            </dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -60,5 +72,6 @@
 			<version>3.3.3</version>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 </project>

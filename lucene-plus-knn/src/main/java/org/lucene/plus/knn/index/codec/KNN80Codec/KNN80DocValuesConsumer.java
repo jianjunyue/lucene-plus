@@ -89,11 +89,11 @@ class KNN80DocValuesConsumer extends DocValuesConsumer implements Closeable {
             String indexPath = Paths.get(((FSDirectory) (FilterDirectory.unwrap(state.directory))).getDirectory().toString(),
                     hnswFileName).toString();
 
-            KNNCodecUtil.Pair pair = KNNCodecUtil.getFloats(values);
-            if (pair == null || pair.vectors.length == 0 || pair.docs.length == 0) {
-                logger.info("Skipping hnsw index creation as there are no vectors or docs in the documents");
-                return;
-            }
+//            KNNCodecUtil.Pair pair = KNNCodecUtil.getFloats(values);
+//            if (pair == null || pair.vectors.length == 0 || pair.docs.length == 0) {
+//                logger.info("Skipping hnsw index creation as there are no vectors or docs in the documents");
+//                return;
+//            }
 
             // Pass the path for the nms library to save the file
             String tempIndexPath = indexPath + TEMP_SUFFIX;
