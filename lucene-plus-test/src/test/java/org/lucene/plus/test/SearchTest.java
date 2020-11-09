@@ -44,8 +44,8 @@ public class SearchTest {
 			Query query2 = new TermQuery(new Term("id", "6"));
 			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
 			blquery.add(query1, Occur.MUST);
-//			blquery.add(query2, Occur.MUST);
-			blquery.add(functionQuery, Occur.MUST);
+			blquery.add(query2, Occur.MUST);
+//			blquery.add(functionQuery, Occur.MUST);
 			Query	query = blquery.build();
 
 			TopDocs results = searcher.search(query, 5000);

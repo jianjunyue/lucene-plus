@@ -1,12 +1,12 @@
 package com.lucene.plus.custom.vectors.function;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.util.Map;
 
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
 import com.lucene.index.LeafReaderContext;
-import com.lucene.plus.custom.util.BinaryBytesUtils; 
+import com.lucene.plus.custom.util.BinaryBytesUtils;
 import com.lucene.queries.function.FunctionValues;
 import com.lucene.queries.function.ValueSource;
 
@@ -14,14 +14,13 @@ import com.lucene.queries.function.ValueSource;
  * https://blog.csdn.net/sc736031305/article/details/84711554 向量内积分数排序
  */
 public class VectorsValueSouce extends ValueSource {
-	private float[] queryVector ; 
+	private float[] queryVector;
 	private String field;
 
-	public VectorsValueSouce(String field, float[] queryVertices) 
-	{
+	public VectorsValueSouce(String field, float[] queryVertices) {
 		this.field = field;
 		queryVector = queryVertices;
-	} 
+	}
 
 	@Override
 	public FunctionValues getValues(Map context, LeafReaderContext readerContext) throws IOException {

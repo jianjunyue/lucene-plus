@@ -2,7 +2,8 @@ package com.lucene.plus.custom.util;
 
 public class IndexField {
 
-    /*
+
+	/*
      * 索引主键
      */
     private String Name;
@@ -26,54 +27,53 @@ public class IndexField {
      */
     private Integer Weight;
 
-    private FieldType fieldType;
+    private FieldType fieldType; 
 
     public String getName() {
-        return Name;
-    }
+		return Name;
+	}
 
-    public void setName(String name) {
-        Name = name;
-    }
+	public void setName(String name) {
+		Name = name;
+	}
 
-    public IndexType getIndex() {
-        return Index;
-    }
+	public IndexType getIndex() {
+		return Index;
+	}
 
-    public void setIndex(IndexType index) {
-        Index = index;
-    }
+	public void setIndex(IndexType index) {
+		Index = index;
+	}
 
-    public IndexType getAnalyzed() {
-        return Analyzed;
-    }
+	public IndexType getAnalyzed() {
+		return Analyzed;
+	}
 
-    public void setAnalyzed(IndexType analyzed) {
-        Analyzed = analyzed;
-    }
+	public void setAnalyzed(IndexType analyzed) {
+		Analyzed = analyzed;
+	}
 
-    public Integer getWeight() {
-        return Weight;
-    }
+	public IndexType getStore() {
+		return Store;
+	}
 
-    public void setWeight(Integer weight) {
-        Weight = weight;
-    }
+	public void setStore(IndexType store) {
+		Store = store;
+	}
 
-    public IndexType getStore() {
-        return Store;
-    }
+	public Integer getWeight() {
+		return Weight;
+	}
 
-    public void setStore(IndexType store) {
-        Store = store;
-    }
+	public void setWeight(Integer weight) {
+		Weight = weight;
+	}
 
-    public FieldType getFieldType() {
-        return fieldType;
-    }
+	public FieldType getFieldType() {
+		return fieldType;
+	}
 
-    public void setFieldType(FieldType fieldType) {
-        this.fieldType = fieldType;
-    }
-
+	public void setFieldType(FieldType fieldType) {
+		this.fieldType = fieldType;
+	}
 }
