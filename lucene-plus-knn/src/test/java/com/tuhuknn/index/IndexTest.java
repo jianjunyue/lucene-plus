@@ -30,8 +30,7 @@ import com.tuhuknn.index.util.BinaryBytesUtils;
 public class IndexTest {
 
 	public static void main(String[] args) {
-		try {
-			
+		try { 
 			IndexFiles();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

@@ -19,43 +19,57 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>7.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.test</groupId>
+			<artifactId>framework</artifactId>
+			<version>7.9.3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>8.4.0</version>
+			<version>8.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queries</artifactId>
-			<version>8.4.0</version>
+			<version>8.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
-			<version>8.4.0</version>
+			<version>8.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-test-framework</artifactId>
-			<version>8.4.0</version>
+			<version>8.6.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>29.0-jre</version>
+		</dependency> 
+		<!--堆外缓存（ohc） -->
+		<dependency>
+			<groupId>org.caffinitas.ohc</groupId>
+			<artifactId>ohc-core</artifactId>
+			<version>0.7.0</version>
 		</dependency>
-		<!--jetCache-->
-        <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis-lettuce</artifactId>
-			<version>2.6.0</version>
-        </dependency>
-		<!--堆外缓存（ohc）-->
-        <dependency>
-                <groupId>org.caffinitas.ohc</groupId>
-                <artifactId>ohc-core</artifactId>
-                <version>0.7.0</version>
-            </dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.1</version>
+		</dependency> 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -72,6 +86,6 @@
 			<version>3.3.3</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 </project>

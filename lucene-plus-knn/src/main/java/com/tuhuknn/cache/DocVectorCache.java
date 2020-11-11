@@ -1,5 +1,7 @@
 package com.tuhuknn.cache;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -14,38 +16,13 @@ import com.alicp.jetcache.anno.CreateCache;
 
 public class DocVectorCache {
 	
-	private static BinaryDocValues binaryDocValues;
+	private static Map<String,BinaryDocValues> cache=new HashMap<>();
 	
-    @CreateCache(name = "cacheBinaryDocValues", cacheType = CacheType.LOCAL, expire = 60, timeUnit = TimeUnit.MINUTES, localLimit = 1000)
-    @CachePenetrationProtect
-    private static Cache<String, BinaryDocValues> cacheBinaryDocValues ;
-     
-	public void init() {
-        RefreshPolicy policy = RefreshPolicy.newPolicy(50, TimeUnit.MINUTES).stopRefreshAfterLastAccess(6, TimeUnit.HOURS);
-        cacheBinaryDocValues.config().setRefreshPolicy(policy); 
-    }
-    
     public static void setLoader(String field,BinaryDocValues docValues) {
-//    	 cacheBinaryDocValues.config().setLoader(this::cacheBinaryDocValues);
-//    	 cacheBinaryDocValues.config().setLoader(cacheBinaryDocValues());
-//    	cacheBinaryDocValues.put(field, docValues);
-    	binaryDocValues=docValues;
-    }
-    
-    public static BinaryDocValues getBinaryDocValues(String field) {
-//    	return cacheBinaryDocValues.get(field); 
-    	return binaryDocValues;
-    }
-    
-//    DocValuesUtil.getFloats(docValues);
-    
-    
-//    private  static CacheLoader<String, BinaryDocValues> cacheBinaryDocValues(String field,BinaryDocValues docValues) {
-//    	cacheBinaryDocValues.put(field, docValues);
-//    	return loader;
-//    }
-//    
-//    private static BinaryDocValues cacheBinaryDocValues(String key) {
-//       return null;
-//    }
+  	cache.put(field, docValues);
+   }
+   
+   public static BinaryDocValues getBinaryDocValues(String field) {
+   	return cache.get(field);  
+   }
 }

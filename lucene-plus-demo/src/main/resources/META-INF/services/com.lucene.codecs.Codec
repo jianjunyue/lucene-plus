@@ -13,8 +13,4 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-#org.lucene.plus.test.core.TestKNNCodec
-
-com.amazon.opendistroforelasticsearch.knn.index.codec.KNN80Codec.KNN80Codec
-com.amazon.opendistroforelasticsearch.knn.index.codec.KNN84Codec.KNN84Codec
-com.amazon.opendistroforelasticsearch.knn.index.codec.KNN86Codec.KNN86Codec
+com.function.index.codec.KnnBinaryCodec
