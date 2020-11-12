@@ -137,7 +137,7 @@ public class  KNNCodecTest   {
 		/**
 		 * Add doc with field "test_vector"
 		 */
-		float[] array = { 1.0f, 3.0f, 4.0f };
+		float[] array = { 5.0f, 3.0f, 4.0f };
 		VectorField vectorField = new VectorField("test_vector", array, KNNVectorFieldMapper.Defaults.FIELD_TYPE);
 
 		writer = new IndexWriter(dir, iwc);

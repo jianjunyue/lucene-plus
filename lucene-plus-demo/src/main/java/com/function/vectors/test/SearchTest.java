@@ -63,7 +63,7 @@ public class SearchTest {
 			System.out.println(hits.length);
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-				System.out.println(hit.doc+" , "+doc.get("id") + " , " + doc.get("name")  + " , "
+				System.out.println("docId："+hit.doc+" , "+doc.get("id") + " , " + doc.get("name")  + " , "
 						+ doc.get("vectorfiled")+" , "+hit.score);
 			}
 

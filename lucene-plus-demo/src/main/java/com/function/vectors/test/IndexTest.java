@@ -104,7 +104,7 @@ public class IndexTest {
 			indexDoc("4", "上海4",valuevectors1); 
 			
 			float[] valuevectors2={22.1f,112.1f,14.23f,4.523f,74.23f}; 
-			indexDoc("5", "北京5",valuevectors2); 
+//			indexDoc("5", "北京5",valuevectors2); 
 			
 			writer.commit();
 			writer.forceMerge(5);

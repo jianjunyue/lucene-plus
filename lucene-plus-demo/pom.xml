@@ -49,4 +49,12 @@
 			<version>2.7</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources/services</directory>
+				<targetPath>META-INF/services</targetPath>
+			</resource>
+		</resources>
+	</build>
 </project>

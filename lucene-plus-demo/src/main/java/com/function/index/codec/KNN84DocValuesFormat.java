@@ -23,7 +23,8 @@ public class KNN84DocValuesFormat extends DocValuesFormat {
 
     @Override
     public DocValuesConsumer fieldsConsumer(SegmentWriteState state) throws IOException {
-        return new KNN84DocValuesConsumer(delegate.fieldsConsumer(state), state);
+    	state.segmentInfo.maxDoc();
+    	return new KNN84DocValuesConsumer(delegate.fieldsConsumer(state), state);
     }
 
     @Override
