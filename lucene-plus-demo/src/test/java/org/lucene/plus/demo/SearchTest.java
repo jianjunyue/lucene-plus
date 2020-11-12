@@ -2,75 +2,71 @@ package org.lucene.plus.demo;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Paths; 
 import java.util.concurrent.Executors;
 
-import com.lucene.analysis.Analyzer;
-import com.lucene.analysis.standard.StandardAnalyzer;
+import com.function.vectors.function.VectorsValueSouce;
 import com.lucene.document.Document;
-import com.lucene.document.Field;
-import com.lucene.document.Field.Store;
-import com.lucene.document.IntPoint;
-import com.lucene.document.LongPoint;
-import com.lucene.document.NumericDocValuesField;
-import com.lucene.document.SortedDocValuesField;
-import com.lucene.document.StringField;
 import com.lucene.index.DirectoryReader;
 import com.lucene.index.IndexReader;
-import com.lucene.index.IndexWriter;
-import com.lucene.index.IndexWriterConfig;
-import com.lucene.index.Term;
+import com.lucene.index.Term; 
+import com.lucene.queries.function.FunctionQuery;
+import com.lucene.queries.function.ValueSource;
+import com.lucene.search.BooleanQuery;
 import com.lucene.search.IndexSearcher;
-import com.lucene.search.PointRangeQuery;
 import com.lucene.search.Query;
 import com.lucene.search.ScoreDoc;
 import com.lucene.search.Sort;
 import com.lucene.search.SortField;
 import com.lucene.search.TermQuery;
-import com.lucene.search.TermRangeQuery;
 import com.lucene.search.TopDocs;
-import com.lucene.store.Directory;
-import com.lucene.store.FSDirectory;
-import com.lucene.util.BytesRef;
+import com.lucene.search.BooleanClause.Occur;
+import com.lucene.store.FSDirectory; 
+
+import com.lucene.util.BytesRef; 
 
 public class SearchTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		IndexTest.init();
+		IndexTest.IndexFiles();
+		search();
+		System.out.println("---------------------");
+		IndexTest.update();
+		System.out.println("---------------------");
 		search();
 		System.out.println("end");
 	}
 
+	private static String indexPath = IndexTest.indexPath;
 
-	private static String indexPath =IndexTest.indexPath;
-
+	/**
+	 * 向量内积搜索
+	 * */
 	private static void search() {
 		Path file = Paths.get(indexPath);
 		IndexReader reader;
 		try {
-			reader = DirectoryReader.open(FSDirectory.open(file));
-//			IndexSearcher searcher = new IndexSearcher(reader);
-			IndexSearcher searcher =  newFixedThreadSearcher(reader,50);
-//		    Sort sort = new Sort(new SortField("sortname",SortField.Type.LONG,false));
-//		    Sort sort = new Sort(new SortField[]{new SortField("sortname", SortField.Type.INT, true)});
-//		    sort = new Sort(new SortField("groupname",SortField.Type.STRING,true));
+			reader = DirectoryReader.open(FSDirectory.open(file)); 
+			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
+			
+			float[] queryVertices={22.1f,112.1f,14.23f,4.523f,74.23f};
+			ValueSource func=new VectorsValueSouce("vectorfiled",queryVertices);
+			FunctionQuery functionQuery = new FunctionQuery(func);
 
-		    //group 
-//		      sort = Sort.RELEVANCE;
-//		    new TermAllGroupsCollector(groupField);
-			
-			
-			Query query = IntPoint.newExactQuery("age", 225);
-//			Query query = new TermRangeQuery("sortvalue");
-//			Query query = new TermQuery(new Term("name", "上海"));
-//			Query query =IntPoint.newRangeQuery("age",  100,225); 
-//			TopDocs results = searcher.search(query, 5000,sort);
+			Query query = new TermQuery(new Term("type", "1"));
+			BooleanQuery.Builder blquery = new BooleanQuery.Builder();
+			blquery.add(query, Occur.MUST);
+			blquery.add(functionQuery, Occur.MUST);
+			query = blquery.build();
+
 			TopDocs results = searcher.search(query, 5000);
-			ScoreDoc[] hits = results.scoreDocs; 
+			ScoreDoc[] hits = results.scoreDocs;
+			System.out.println(hits.length);
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
-//				System.out.println(doc.get("sortname")+" , "+doc.get("groupname"));
-				
-				System.out.println(hit.doc+" , "+doc.get("id")+" , "+doc.get("name") +" , "+doc.get("sortvalue")+" , "+doc.get("groupvalue"));
+				System.out.println("docId："+hit.doc+" , "+doc.get("id") + " , " + doc.get("name")  + " , "
+						+ doc.get("vectorfiled")+" , "+hit.score);
 			}
 
 		} catch (IOException e) {
@@ -78,33 +74,9 @@ public class SearchTest {
 			e.printStackTrace();
 		}
 	}
-	
-	private static IndexSearcher newFixedThreadSearcher(IndexReader r, int nThreads) {
-        return new IndexSearcher(r.getContext(), Executors.newFixedThreadPool(nThreads));
-//        return new IndexSearcher(r.getContext());
-    }
 
-	/**
-	 * 排序。 sort=id,INT,false
-	 */
-	public Sort getSort(String strSort) {
-		try {
-			if (strSort == null || strSort.trim().length() == 0) {
-				return null;
-			}
-			String[] s = strSort.trim().split(",");
-			if (s.length == 2 || s.length == 3) {
-				boolean reverse = false;// 默认是小到大排序
-				if (s.length == 3) {
-					reverse = Boolean.valueOf(s[2].toLowerCase());
-				}
-				SortField.Type type = SortField.Type.INT;
-				Sort sort = new Sort(new SortField(s[0].toLowerCase(), type, reverse));
-				return sort;
-			} else { 
-			}
-		} catch (Exception e) { 
-		}
-		return null;
+	private static IndexSearcher newFixedThreadSearcher(IndexReader r, int nThreads) {
+		return new IndexSearcher(r.getContext(), Executors.newFixedThreadPool(nThreads));
+//        return new IndexSearcher(r.getContext());
 	}
 }
