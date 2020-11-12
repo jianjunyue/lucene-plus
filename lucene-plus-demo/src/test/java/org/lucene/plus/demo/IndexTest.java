@@ -52,13 +52,13 @@ public class IndexTest {
 
 	public static void IndexFiles() throws IOException { 
 
-		float[] valuevectors1={12.1f,12.1f,174.23f,4.23f,174.23f}; 
+		float[] valuevectors1={1f,12.1f,174.23f,4.23f,174.23f}; 
 		indexDoc("1", "上海1",valuevectors1); 
 		
-		float[] valuevectors2={22.1f,112.1f,14.23f,4.523f,74.23f}; 
+		float[] valuevectors2={2f,112.1f,14.23f,4.523f,74.23f}; 
 		indexDoc("2", "北京",valuevectors2); 
 		
-		float[] valuevectors3={32.1f, 2.1f,1.23f,34.523f,7.23f}; 
+		float[] valuevectors3={3f, 2.1f,1.23f,34.523f,7.23f}; 
 		indexDoc("3", "上海3",valuevectors3); 
  
 		
@@ -103,10 +103,10 @@ public class IndexTest {
 //			float[] valuevectors1={112.1f,12.1f,174.23f,4.23f,174.23f}; 
 //			indexDoc("4", "上海4",valuevectors1); 
 			
-			float[] valuevectors1={72.1f,162.1f,174.23f,4.23f,174.23f}; 
-			indexDoc("7", "上海7",valuevectors1); 
+			float[] valuevectors1={4f,162.1f,174.23f,4.23f,174.23f}; 
+			indexDoc("4", "上海4",valuevectors1); 
 			
-			float[] valuevectors2={22.1f,112.1f,14.23f,4.523f,74.23f}; 
+			float[] valuevectors2={5f,112.1f,14.23f,4.523f,74.23f}; 
 			indexDoc("5", "北京5",valuevectors2); 
 			
 			writer.commit();

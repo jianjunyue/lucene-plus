@@ -2,7 +2,8 @@ package com.function.vectors.function;
 
 import java.io.IOException;
 import java.util.Map;
-  
+
+import com.function.vectors.cache.FieldDocValuesCache;
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
 import com.lucene.index.LeafReaderContext;
@@ -34,7 +35,7 @@ public class VectorsValueSouce extends ValueSource {
 				try {
 					if (docValues.advanceExact(doc) == false)
 						return val;
-					float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
+					float[] vertices = FieldDocValuesCache.getBinaryValue(field, doc) ;
 					if (queryVector.length == vertices.length) {
 						for (int i = 0; i < queryVector.length; i++) {
 							val += queryVector[i] * vertices[i];
