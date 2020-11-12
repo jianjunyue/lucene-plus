@@ -2,15 +2,14 @@ package com.function.vectors.function;
 
 import java.io.IOException;
 import java.util.Map;
-
-import com.function.util.KNNCodecUtil;
-import com.function.vectors.cache.FieldDocValuesCache;
+  
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
 import com.lucene.index.LeafReaderContext;
 import com.lucene.plus.custom.util.BinaryBytesUtils;
 import com.lucene.queries.function.FunctionValues;
 import com.lucene.queries.function.ValueSource;
+ 
 
 /**
  * https://blog.csdn.net/sc736031305/article/details/84711554 向量内积分数排序
@@ -24,33 +23,18 @@ public class VectorsValueSouce extends ValueSource {
 		queryVector = queryVertices;
 	}
 
-	private void docValuesCache(BinaryDocValues docValues) {
-		try {
-			while (docValues.nextDoc() < Integer.MAX_VALUE) {
-				int docId = docValues.docID();
-				float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
-				FieldDocValuesCache.add(field, docId, vertices);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public FunctionValues getValues(Map context, LeafReaderContext readerContext) throws IOException {
 		final BinaryDocValues docValues = DocValues.getBinary(readerContext.reader(), field);
-		docValuesCache(docValues);  
-
 		FunctionValues fun = new FunctionValues() {
 
 			@Override
 			public float floatVal(int doc) {
 				float val = 0;
-				try { 
+				try {
 					if (docValues.advanceExact(doc) == false)
 						return val;
-					float[] vertices = FieldDocValuesCache.getBinaryValue(field, doc);
+					float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
 					if (queryVector.length == vertices.length) {
 						for (int i = 0; i < queryVector.length; i++) {
 							val += queryVector[i] * vertices[i];
@@ -59,8 +43,7 @@ public class VectorsValueSouce extends ValueSource {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} 
-				System.out.println("doc:" + doc+" , val:"+val);
+				}
 				return val;
 			}
 

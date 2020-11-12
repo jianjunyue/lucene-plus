@@ -28,6 +28,8 @@ import com.lucene.util.BytesRef;
 public class SearchTest {
 
 	public static void main(String[] args) throws IOException {
+		IndexTest.init();
+		IndexTest.IndexFiles();
 		search();
 		System.out.println("---------------------");
 		IndexTest.update();

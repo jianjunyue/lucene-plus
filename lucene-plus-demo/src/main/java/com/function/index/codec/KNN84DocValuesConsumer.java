@@ -37,17 +37,11 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	}
 
 	public void addKNNBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
-		delegatee.addBinaryField(field, valuesProducer);
 		// 增加缓存
 		BinaryDocValues docValues = valuesProducer.getBinary(field);
 
 		KNNCodecUtil.Pair pair = KNNCodecUtil.getFloats(docValues);
-		int maxDoc = state.segmentInfo.maxDoc();
-		System.out.println("maxDoc:" + maxDoc);
-		int docId = docValues.docID();
-		float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
-		FieldDocValuesCache.add(field.name, docId, vertices);
-		System.out.println("addKNNBinaryField：" + field.name);
+		FieldDocValuesCache.add(field.name, pair); 
 	}
 
 	/**
@@ -59,14 +53,14 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	public void merge(MergeState mergeState) {
 		try {
 			delegatee.merge(mergeState);
-			assert mergeState != null;
-			assert mergeState.mergeFieldInfos != null;
-			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
-				DocValuesType type = fieldInfo.getDocValuesType();
-				if (type == DocValuesType.BINARY) {
-					addKNNBinaryField(fieldInfo, new KNN84DocValuesProducer(mergeState));
-				}
-			}
+//			assert mergeState != null;
+//			assert mergeState.mergeFieldInfos != null;
+//			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
+//				DocValuesType type = fieldInfo.getDocValuesType();
+//				if (type == DocValuesType.BINARY) {
+//					addKNNBinaryField(fieldInfo, new KNN84DocValuesProducer(mergeState));
+//				}
+//			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

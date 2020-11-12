@@ -30,7 +30,7 @@ public class IndexTest {
 		System.out.println("Hello World!");
 	}
 
-	public static String indexPath = "D:\\data\\index\\vectest";
+	public static String indexPath = "D:\\data\\index\\vectest1";
 	private static IndexWriter writer;
 	private static Path file;
 	

@@ -38,7 +38,7 @@ public class IndexTest {
 	private static IndexWriter writer;
 	private static Path file;
 	
-	private static void init() throws IOException {
+	public static void init() throws IOException {
 		file = Paths.get(indexPath);
 		Directory dir = FSDirectory.open(file);
 		Analyzer analyzer = new StandardAnalyzer();
@@ -50,7 +50,7 @@ public class IndexTest {
 		writer.commit();  
 	}
 
-	private static void IndexFiles() throws IOException { 
+	public static void IndexFiles() throws IOException { 
 
 		float[] valuevectors1={12.1f,12.1f,174.23f,4.23f,174.23f}; 
 		indexDoc("1", "上海1",valuevectors1); 
@@ -99,12 +99,15 @@ public class IndexTest {
 			Codec codec = new KnnBinaryCodec();
 			iwc.setCodec(codec);
 			writer = new IndexWriter(dir, iwc);  
+
+//			float[] valuevectors1={112.1f,12.1f,174.23f,4.23f,174.23f}; 
+//			indexDoc("4", "上海4",valuevectors1); 
 			
-			float[] valuevectors1={12.1f,12.1f,174.23f,4.23f,174.23f}; 
-			indexDoc("4", "上海4",valuevectors1); 
+			float[] valuevectors1={72.1f,162.1f,174.23f,4.23f,174.23f}; 
+			indexDoc("7", "上海7",valuevectors1); 
 			
 			float[] valuevectors2={22.1f,112.1f,14.23f,4.523f,74.23f}; 
-//			indexDoc("5", "北京5",valuevectors2); 
+			indexDoc("5", "北京5",valuevectors2); 
 			
 			writer.commit();
 			writer.forceMerge(5);
