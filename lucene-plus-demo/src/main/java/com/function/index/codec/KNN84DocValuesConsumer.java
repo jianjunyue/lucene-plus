@@ -17,8 +17,7 @@ import com.lucene.index.SegmentWriteState;
 import com.lucene.plus.custom.util.BinaryBytesUtils;
 
 public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeable {
-
-	private final String TEMP_SUFFIX = "tmp";
+ 
 	private DocValuesConsumer delegatee;
 	private SegmentWriteState state;
 
@@ -39,7 +38,6 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	public void addKNNBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		// 增加缓存
 		BinaryDocValues docValues = valuesProducer.getBinary(field);
-
 		KNNCodecUtil.Pair pair = KNNCodecUtil.getFloats(docValues);
 		FieldDocValuesCache.add(field.name, pair); 
 	}
@@ -53,14 +51,14 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	public void merge(MergeState mergeState) {
 		try {
 			delegatee.merge(mergeState);
-//			assert mergeState != null;
-//			assert mergeState.mergeFieldInfos != null;
-//			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
-//				DocValuesType type = fieldInfo.getDocValuesType();
-//				if (type == DocValuesType.BINARY) {
-//					addKNNBinaryField(fieldInfo, new KNN84DocValuesProducer(mergeState));
-//				}
-//			}
+			assert mergeState != null;
+			assert mergeState.mergeFieldInfos != null;
+			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
+				DocValuesType type = fieldInfo.getDocValuesType();
+				if (type == DocValuesType.BINARY) {
+					addKNNBinaryField(fieldInfo, new KNN84DocValuesProducer(mergeState));
+				}
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

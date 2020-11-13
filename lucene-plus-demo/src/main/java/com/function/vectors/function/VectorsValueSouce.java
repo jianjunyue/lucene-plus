@@ -1,11 +1,13 @@
 package com.function.vectors.function;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import com.function.vectors.cache.FieldDocValuesCache;
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DocValues;
+import com.lucene.index.IndexReaderContext;
 import com.lucene.index.LeafReaderContext;
 import com.lucene.plus.custom.util.BinaryBytesUtils;
 import com.lucene.queries.function.FunctionValues;
@@ -27,6 +29,8 @@ public class VectorsValueSouce extends ValueSource {
 	@Override
 	public FunctionValues getValues(Map context, LeafReaderContext readerContext) throws IOException {
 		final BinaryDocValues docValues = DocValues.getBinary(readerContext.reader(), field);
+		int base=readerContext.docBase;
+		List<IndexReaderContext> list=readerContext.children();
 		FunctionValues fun = new FunctionValues() {
 
 			@Override
@@ -35,31 +39,23 @@ public class VectorsValueSouce extends ValueSource {
 				try {
 					if (docValues.advanceExact(doc) == false)
 						return val;
-					float[] vertices = FieldDocValuesCache.getBinaryValue(field, doc) ;
+//					float[] vertices = FieldDocValuesCache.getBinaryValue(field, doc) ;
+
+					float[] vertices = BinaryBytesUtils.bytesToFloats(docValues.binaryValue());
 					if (queryVector.length == vertices.length) {
 						for (int i = 0; i < queryVector.length; i++) {
 							val += queryVector[i] * vertices[i];
 						}
 					}
-				} catch (IOException e) {
+					System.out.println("A doc:"+doc+" , val:"+val);
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return val;
 			}
 
-			@Override
-			public int intVal(int doc) {
-//				try {
-//					if (numericDocValues.advanceExact(doc) == false)
-//						return 0;
-//					return (int) numericDocValues.longValue();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				return 0;
-			}
+ 
 
 			@Override
 			public String toString(int doc) throws IOException {

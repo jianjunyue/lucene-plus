@@ -1,61 +1,62 @@
-package org.lucene.plus.demo;
+package org.lucene.plus.demo.index;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths; 
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 
+import org.lucene.plus.demo.IndexTest;
+import org.lucene.plus.demo.realtime.RealIndexSearchManager;
+import org.lucene.plus.demo.realtime.RealTimeIndexSearcherInstance;
+
+import com.function.vectors.Vectors;
+import com.function.vectors.Field.VectorsStoredField;
 import com.function.vectors.function.VectorsValueSouce;
 import com.lucene.document.Document;
+import com.lucene.document.Field;
+import com.lucene.document.StringField;
+import com.lucene.document.Field.Store;
 import com.lucene.index.DirectoryReader;
 import com.lucene.index.IndexReader;
-import com.lucene.index.Term; 
+import com.lucene.index.Term;
 import com.lucene.queries.function.FunctionQuery;
 import com.lucene.queries.function.ValueSource;
 import com.lucene.search.BooleanQuery;
 import com.lucene.search.IndexSearcher;
 import com.lucene.search.Query;
 import com.lucene.search.ScoreDoc;
-import com.lucene.search.Sort;
-import com.lucene.search.SortField;
 import com.lucene.search.TermQuery;
 import com.lucene.search.TopDocs;
 import com.lucene.search.BooleanClause.Occur;
-import com.lucene.store.FSDirectory; 
+import com.lucene.store.FSDirectory;
 
-import com.lucene.util.BytesRef; 
+public class RealTimeIndexTest {
 
-public class SearchTest {
-
-	public static void main(String[] args) throws IOException { 
-		IndexTest.IndexFiles();
+	public static void main(String[] args) throws InterruptedException { 
+		realIndex() ;
+		
+		for(int i=0;i<1000;i++) {
 		search();
-		System.out.println("---------------------");
-		
-		IndexTest.update();
-		
-		System.out.println("---------------------");
-		search();
-		
-
-		IndexTest.update();
-		
-		System.out.println("---------------------");
-		search();
-		System.out.println("end");
+		Thread.sleep(3000);
+		}
 	}
-
-	private static String indexPath = IndexTest.indexPath;
+	
+	private static void realIndex() {
+		Thread	thread = new Thread() {
+			public void run() {
+				RealIndexSearchManager.getInstance().runIndex();
+			}
+		};
+		thread.start(); 
+	}
+	  
 
 	/**
 	 * 向量内积搜索
 	 * */
-	private static void search() {
-		Path file = Paths.get(indexPath);
-		IndexReader reader;
-		try {
-			reader = DirectoryReader.open(FSDirectory.open(file)); 
-			IndexSearcher searcher = newFixedThreadSearcher(reader, 50);
+	private static void search() { 
+		try { 
+			IndexSearcher searcher = RealTimeIndexSearcherInstance.getInstance().getIndexSearcher();
 			
 			float[] queryVertices={22.1f,112.1f,14.23f,4.523f,74.23f};
 			ValueSource func=new VectorsValueSouce("vectorfiled",queryVertices);
@@ -67,9 +68,8 @@ public class SearchTest {
 			blquery.add(functionQuery, Occur.MUST);
 			query = blquery.build();
 
-			TopDocs results = searcher.search(query, 5000);
-			ScoreDoc[] hits = results.scoreDocs;
-			System.out.println(hits.length);
+			TopDocs results = searcher.search(query, 5);
+			ScoreDoc[] hits = results.scoreDocs; 
 			for (ScoreDoc hit : hits) {
 				Document doc = searcher.doc(hit.doc);
 				System.out.println("docId："+hit.doc+" , "+doc.get("id") + " , " + doc.get("name")  + " , "
@@ -81,9 +81,6 @@ public class SearchTest {
 			e.printStackTrace();
 		}
 	}
+ 
 
-	private static IndexSearcher newFixedThreadSearcher(IndexReader r, int nThreads) {
-		return new IndexSearcher(r.getContext(), Executors.newFixedThreadPool(nThreads));
-//        return new IndexSearcher(r.getContext());
-	}
 }
