@@ -1,18 +1,13 @@
-package com.function.vectors.function;
+package com.lucene.plus.custom.codec.knn.vectors.function;
 
-import java.io.IOException;
-import java.util.List;
+import java.io.IOException; 
 import java.util.Map;
 
-import com.function.util.FieldUtils;
-import com.function.vectors.cache.FieldDocValuesCache;
-import com.lucene.index.BinaryDocValues;
-import com.lucene.index.DocValues;
-import com.lucene.index.IndexReaderContext;
+import com.lucene.plus.custom.codec.knn.util.FieldUtils;
+import com.lucene.plus.custom.codec.knn.vectors.cache.FieldDocValuesCache;
+import com.lucene.index.DocValues; 
 import com.lucene.index.LeafReaderContext;
-import com.lucene.index.NumericDocValues;
-import com.lucene.index.SortedDocValues;
-import com.lucene.plus.custom.util.BinaryBytesUtils;
+import com.lucene.index.NumericDocValues; 
 import com.lucene.queries.function.FunctionValues;
 import com.lucene.queries.function.ValueSource;
  

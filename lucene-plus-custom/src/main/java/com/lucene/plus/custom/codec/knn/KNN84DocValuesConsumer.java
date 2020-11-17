@@ -1,13 +1,13 @@
-package com.function.index.codec;
+package com.lucene.plus.custom.codec.knn;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 import com.lucene.index.DocValuesType;
 
-import com.function.util.KNNCodecUtil;
-import com.function.util.FieldUtils;
-import com.function.vectors.cache.FieldDocValuesCache;
+import com.lucene.plus.custom.codec.knn.util.KNNCodecUtil;
+import com.lucene.plus.custom.codec.knn.util.FieldUtils;
+import com.lucene.plus.custom.codec.knn.vectors.cache.FieldDocValuesCache;
 import com.lucene.codecs.DocValuesConsumer;
 import com.lucene.codecs.DocValuesProducer;
 import com.lucene.index.BinaryDocValues;
@@ -18,7 +18,7 @@ import com.lucene.index.SortedDocValues;
 import com.lucene.plus.custom.util.BinaryBytesUtils;
 
 public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeable {
- 
+
 	private DocValuesConsumer delegatee;
 	private SegmentWriteState state;
 
@@ -39,14 +39,9 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	public void addKNNBinaryField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		// 增加缓存
 		BinaryDocValues docValues = valuesProducer.getBinary(field);
-	 
-//		System.out.println("docID：" + docValues.docID());
-		System.out.println("-----------------------------------------------");
-		
+
 		KNNCodecUtil.Pair pair = KNNCodecUtil.getFloats(docValues);
-		FieldDocValuesCache.add(field.name, pair); 
-		 
- 
+		FieldDocValuesCache.add(field.name, pair);
 	}
 
 	/**
@@ -55,44 +50,28 @@ public class KNN84DocValuesConsumer extends DocValuesConsumer implements Closeab
 	 * @param mergeState Holds common state used during segment merging
 	 */
 	@Override
-	public void merge(MergeState mergeState) {
-		try {
-			delegatee.merge(mergeState);
-//			assert mergeState != null;
-//			assert mergeState.mergeFieldInfos != null;
-//			for (FieldInfo fieldInfo : mergeState.mergeFieldInfos) {
-//				DocValuesType type = fieldInfo.getDocValuesType();
-//				if (type == DocValuesType.BINARY) {
-//					addKNNBinaryField(fieldInfo, new KNN84DocValuesProducer(mergeState));
-//				}
-//			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	public void merge(MergeState mergeState) throws IOException {
+		delegatee.merge(mergeState);
 	}
 
 	@Override
 	public void addSortedSetField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		delegatee.addSortedSetField(field, valuesProducer);
-		System.out.println("addSortedSetField：" + field.name);
 	}
 
 	@Override
 	public void addSortedNumericField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		delegatee.addSortedNumericField(field, valuesProducer);
-		System.out.println("addSortedNumericField：" + field.name);
 	}
 
 	@Override
 	public void addSortedField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		delegatee.addSortedField(field, valuesProducer);
-		System.out.println("addSortedField：" + field.name);
 	}
 
 	@Override
 	public void addNumericField(FieldInfo field, DocValuesProducer valuesProducer) throws IOException {
 		delegatee.addNumericField(field, valuesProducer);
-		System.out.println("addNumericField：" + field.name);
 	}
 
 	@Override

@@ -1,9 +1,9 @@
-package org.lucene.plus.demo.realtime;
+package com.lucene.plus.custom.codec.knn.realtime;
 
 import java.io.File;
 import java.nio.file.Path;
 
-import com.function.index.codec.KnnBinaryCodec;
+import com.lucene.plus.custom.codec.knn.KnnBinaryCodec;
 import com.lucene.analysis.Analyzer;
 import com.lucene.analysis.standard.StandardAnalyzer;
 import com.lucene.codecs.Codec;

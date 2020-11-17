@@ -1,38 +1,19 @@
-package com.function.util;
+package com.lucene.plus.custom.codec.knn.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import com.function.util.KNNCodecUtil.Pair;
-import com.function.vectors.cache.FieldDocValuesCache;
+import java.nio.file.Path; 
+  
 import com.lucene.index.BinaryDocValues;
 import com.lucene.index.DirectoryReader;
 import com.lucene.index.LeafReader;
 import com.lucene.index.LeafReaderContext;
+import com.lucene.plus.custom.codec.knn.util.KNNCodecUtil.Pair;
+import com.lucene.plus.custom.codec.knn.vectors.cache.FieldDocValuesCache;
 import com.lucene.store.Directory;
-import com.lucene.store.FSDirectory;
-import com.lucene.util.BytesRef;
+import com.lucene.store.FSDirectory; 
 
-public class DocValuesUtils {
-
-//	public static void getFloats(BinaryDocValues values) {
-//		ArrayList<float[]> vectorList = new ArrayList<>();
-//		ArrayList<Integer> docIdList = new ArrayList<>();
-//		try {
-//			for (int doc = values.nextDoc(); doc != DocIdSetIterator.NO_MORE_DOCS; doc = values.nextDoc()) {
-//				BytesRef bytesref = values.binaryValue();
-//				float[] vector = BinaryBytesUtils.bytesToFloats(bytesref);
-//
-//				vectorList.add(vector);
-//				docIdList.add(doc);
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-//	}
+public class DocValuesUtils { 
 
 	public static void getFloats(String indexPath, String field) {
 		Directory dir = getDirectory(indexPath);

@@ -1,4 +1,4 @@
-package com.function.util;
+package com.lucene.plus.custom.codec.knn.util;
 
 public class FieldUtils {
 

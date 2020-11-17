@@ -1,20 +1,11 @@
-package org.lucene.plus.demo.index;
+package com.lucene.plus.custom.codec.knn.realtime.index;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.Executors;
-
-import org.lucene.plus.demo.IndexTest;
-import org.lucene.plus.demo.realtime.RealIndexSearchManager;
-import org.lucene.plus.demo.realtime.RealTimeIndexSearcherInstance;
-
-import com.function.util.DocValuesUtils;
-import com.function.vectors.Vectors;
-import com.function.vectors.Field.VectorsStoredField;
-import com.function.vectors.cache.FieldDocValuesCache;
-import com.function.vectors.function.VectorsValueSouce;
+ 
 import com.lucene.document.Document;
 import com.lucene.document.Field;
 import com.lucene.document.StringField;
@@ -22,6 +13,11 @@ import com.lucene.document.Field.Store;
 import com.lucene.index.DirectoryReader;
 import com.lucene.index.IndexReader;
 import com.lucene.index.Term;
+import com.lucene.plus.custom.codec.knn.realtime.RealIndexSearchManager;
+import com.lucene.plus.custom.codec.knn.realtime.RealTimeIndexSearcherInstance;
+import com.lucene.plus.custom.codec.knn.util.DocValuesUtils;
+import com.lucene.plus.custom.codec.knn.vectors.cache.FieldDocValuesCache;
+import com.lucene.plus.custom.codec.knn.vectors.function.VectorsValueSouce;
 import com.lucene.queries.function.FunctionQuery;
 import com.lucene.queries.function.ValueSource;
 import com.lucene.search.BooleanQuery;
@@ -30,8 +26,7 @@ import com.lucene.search.Query;
 import com.lucene.search.ScoreDoc;
 import com.lucene.search.TermQuery;
 import com.lucene.search.TopDocs;
-import com.lucene.search.BooleanClause.Occur;
-import com.lucene.store.FSDirectory;
+import com.lucene.search.BooleanClause.Occur; 
 
 public class RealTimeIndexTest {
 

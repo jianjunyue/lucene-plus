@@ -13,9 +13,10 @@
  *   permissions and limitations under the License.
  */
 
-package com.function.util;
+package com.lucene.plus.custom.codec.knn.util;
 
 import com.lucene.index.BinaryDocValues;
+import com.lucene.plus.custom.util.BinaryBytesUtils;
 import com.lucene.search.DocIdSetIterator;
 import com.lucene.util.BytesRef;
 
@@ -48,8 +49,7 @@ public class KNNCodecUtil {
 			int keyId=(int)vector[0];
 			docIdList.add(keyId);
 			vector=Arrays.copyOfRange(vector,1,vector.length);
-			vectorList.add(vector); 
-			System.out.println("getFloats keyID：" +keyId);
+			vectorList.add(vector);  
 		}
 		return new KNNCodecUtil.Pair(docIdList.stream().mapToInt(Integer::intValue).toArray(),
 				vectorList.toArray(new float[][] {}));

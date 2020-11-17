@@ -1,9 +1,9 @@
-package com.function.vectors.cache;
+package com.lucene.plus.custom.codec.knn.vectors.cache;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.function.util.KNNCodecUtil;
+import com.lucene.plus.custom.codec.knn.util.KNNCodecUtil;
 
 public class FieldDocValuesCache {
 

@@ -1,13 +1,13 @@
-package org.lucene.plus.demo.realtime;
+package com.lucene.plus.custom.codec.knn.realtime;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import com.function.util.FieldUtils;
-import com.function.vectors.Vectors;
-import com.function.vectors.Field.VectorsStoredField;
+import com.lucene.plus.custom.codec.knn.util.FieldUtils;
+import com.lucene.plus.custom.codec.knn.vectors.Vectors;
+import com.lucene.plus.custom.codec.knn.vectors.field.VectorsStoredField;
 import com.lucene.document.Document;
 import com.lucene.document.Field;
 import com.lucene.document.StringField;
